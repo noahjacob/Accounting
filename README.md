@@ -1,6 +1,6 @@
 ## Accounting
 
-Accounting System
+An Accounting Application
 
 #### License
 
