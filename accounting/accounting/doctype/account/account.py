@@ -26,12 +26,3 @@ def get_children(doctype, parent=None, company=None, is_root=False):
 	
 	accounts = frappe.get_list(doctype, fields=fields, filters=filters, order_by='name')
 	return accounts
-
-@frappe.whitelist()
-def get_default_company():
-	company= []
-	companies = frappe.db.sql("SELECT name from tabAccount ")
-	for c in companies:
-		company.append(c[0])
-	frappe.throw(company)
-	return company
