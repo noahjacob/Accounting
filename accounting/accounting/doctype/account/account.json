@@ -1,5 +1,7 @@
 {
  "actions": [],
+ "allow_auto_repeat": 1,
+ "allow_rename": 1,
  "autoname": "field:account_name",
  "creation": "2021-02-12 18:58:30.652430",
  "doctype": "DocType",
@@ -69,7 +71,7 @@
  "index_web_pages_for_search": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2021-02-12 19:41:16.792587",
+ "modified": "2021-02-23 16:43:00.952831",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Account",

@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 import frappe
 from frappe.utils import now
 
-def make_gl_entry(self,account,debit,credit):
+def make_gl_entry(self,account,debit,credit,against = None):
     gl_entry = frappe.get_doc({
             'doctype':'GL Entry',
             'posting_date':self.posting_date,
@@ -12,6 +12,7 @@ def make_gl_entry(self,account,debit,credit):
             'company':self.company,
             'voucher_type':self.doctype,
             'voucher_no':self.name
+            
     })
     gl_entry.insert()
 
