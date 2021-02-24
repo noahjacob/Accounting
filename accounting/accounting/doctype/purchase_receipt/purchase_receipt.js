@@ -26,7 +26,8 @@ frappe.ui.form.on('Purchase Receipt', {
 				})
 			}
 		})
-		frm.refresh()
+		
+		
 		
 
 		

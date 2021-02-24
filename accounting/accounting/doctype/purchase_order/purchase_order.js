@@ -17,7 +17,7 @@ frappe.ui.form.on('Purchase Order Item','item_name',function(frm, cdt,cdn) {
 	let row = locals[cdt][cdn]
 
 	let rate = row.item_rate;
-	row.item_quantity = 1
+	row.item_quantity = 1;
 	let qty  = row.item_quantity;
 	let amount = rate * qty;
 	row.amount = amount;

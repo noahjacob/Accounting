@@ -49,12 +49,12 @@
   },
   {
    "fieldname": "debit_amount",
-   "fieldtype": "Data",
+   "fieldtype": "Currency",
    "label": "Debit Amount"
   },
   {
    "fieldname": "credit_amount",
-   "fieldtype": "Data",
+   "fieldtype": "Currency",
    "label": "Credit Amount"
   },
   {
@@ -92,7 +92,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-02-21 17:58:58.100220",
+ "modified": "2021-02-24 11:45:26.983871",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "GL Entry",

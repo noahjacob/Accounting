@@ -9,7 +9,12 @@
   "company_name",
   "company_type",
   "abbr",
-  "default_inventory_account"
+  "default_inventory_account",
+  "default_payable_account",
+  "default_receivable_account",
+  "stock_received_but_not_billed",
+  "default_expense_account",
+  "default_income_account"
  ],
  "fields": [
   {
@@ -33,11 +38,41 @@
    "fieldtype": "Link",
    "label": "Default Inventory Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "default_payable_account",
+   "fieldtype": "Link",
+   "label": "Default Payable Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "default_receivable_account",
+   "fieldtype": "Link",
+   "label": "Default Receivable Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "stock_received_but_not_billed",
+   "fieldtype": "Link",
+   "label": "Stock Received But Not Billed",
+   "options": "Account"
+  },
+  {
+   "fieldname": "default_expense_account",
+   "fieldtype": "Link",
+   "label": "Default Expense Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "default_income_account",
+   "fieldtype": "Link",
+   "label": "Default Income Account",
+   "options": "Account"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-02-23 16:59:05.723479",
+ "modified": "2021-02-24 14:18:08.604309",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Company",
