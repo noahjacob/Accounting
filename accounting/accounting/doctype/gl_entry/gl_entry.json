@@ -37,9 +37,8 @@
   },
   {
    "fieldname": "party_type",
-   "fieldtype": "Select",
-   "label": "Party Type",
-   "options": "Supplier\nCustomer"
+   "fieldtype": "Data",
+   "label": "Party Type"
   },
   {
    "fieldname": "party",
@@ -92,7 +91,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-02-24 11:45:26.983871",
+ "modified": "2021-02-25 11:17:01.203095",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "GL Entry",

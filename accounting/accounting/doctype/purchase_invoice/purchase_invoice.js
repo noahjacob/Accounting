@@ -33,3 +33,16 @@ frappe.ui.form.on('Purchase Invoice', {
 	}
 	
 });
+frappe.ui.form.on('Purchase Invoice',{
+	refresh(frm){
+		if(frm.doc.docstatus){
+		frm.add_custom_button(__('Make Payment'),function(){
+			var i_map = {
+				
+
+			}
+			frappe.new_doc('Payment Entry')
+		})
+		}	
+	}
+})

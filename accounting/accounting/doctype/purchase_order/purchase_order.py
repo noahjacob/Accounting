@@ -7,7 +7,7 @@ import frappe
 from frappe.model.document import Document
 from frappe.utils import flt
 class PurchaseOrder(Document):
-	def before_save(self):
+	def validate(self):
 		self.total_amount,self.total_quantity = 0,0
 		if not self.items:
 			frappe.throw("Add some Items before saving")

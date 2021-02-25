@@ -32,6 +32,7 @@
    "reqd": 1
   },
   {
+   "fetch_from": "item_name.standard_rate",
    "fetch_if_empty": 1,
    "fieldname": "item_rate",
    "fieldtype": "Currency",
@@ -66,7 +67,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-02-24 15:20:07.607158",
+ "modified": "2021-02-25 12:47:56.108312",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Sales Order Item",

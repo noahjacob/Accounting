@@ -38,7 +38,17 @@ frappe.ui.form.on('Purchase Receipt', {
 	}
 
 });
-frappe.ui.form.on('Purchase Receipt Item',{
-
-});
+frappe.ui.form.on('Purchase Receipt',{
+	refresh(frm){
+		if(frm.doc.docstatus){
+		frm.add_custom_button(__('Purchase Invoice'),function(){
+			var r_map = {
+				supplier:frm.doc.supplier,
+				purchase_receipt:frm.doc.name
+			}
+			frappe.new_doc('Purchase Invoice',r_map)
+		},__("Create"))
+		}	
+	}
+})
 

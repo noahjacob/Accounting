@@ -12,6 +12,8 @@ class Account(NestedSet):
 	def validate(self):
 		self.account_name = self.account_name +' - '+ self.company[0]
 		
+
+		
 	
 	
 @frappe.whitelist()	

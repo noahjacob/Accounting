@@ -7,7 +7,8 @@
  "engine": "InnoDB",
  "field_order": [
   "party_type",
-  "party_name"
+  "party_name",
+  "account_type"
  ],
  "fields": [
   {
@@ -25,11 +26,17 @@
    "label": "Party Name",
    "reqd": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "account_type",
+   "fieldtype": "Select",
+   "label": "Account Type",
+   "options": "Pay\nReceive"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-02-21 14:47:54.586710",
+ "modified": "2021-02-24 15:49:44.625541",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Party",

@@ -35,5 +35,18 @@ frappe.ui.form.on('Purchase Order', 'onload', function (frm) {
 	})
 	// }
 });
+frappe.ui.form.on('Purchase Order',{
+	refresh(frm){
+		if(frm.doc.docstatus){
+		frm.add_custom_button(__('Purchase Receipt'),function(){
+			var o_map = {
+				supplier:frm.doc.supplier,
+				purchase_order:frm.doc.name
+			}
+			frappe.new_doc('Purchase Receipt',o_map)
+		},__("Create"))}
+		
+	}
+})
 
 
