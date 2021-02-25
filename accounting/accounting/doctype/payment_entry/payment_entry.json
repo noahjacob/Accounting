@@ -1,0 +1,143 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2021-02-24 16:29:19.313546",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "type_of_payment_section",
+  "naming_series",
+  "payment_type",
+  "column_break_4",
+  "posting_date",
+  "company",
+  "payments_fromt0_section",
+  "party_type",
+  "accounts_section",
+  "account_paid_from",
+  "column_break_11",
+  "account_paid_to",
+  "amount_paid",
+  "references_section",
+  "payment_references",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "type_of_payment_section",
+   "fieldtype": "Section Break",
+   "label": "TYPE OF PAYMENT"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "naming_series",
+   "options": "ACC-PAY-.YYYY.-"
+  },
+  {
+   "fieldname": "payment_type",
+   "fieldtype": "Select",
+   "label": "Payment Type",
+   "options": "Pay\nReceive"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "payments_fromt0_section",
+   "fieldtype": "Section Break",
+   "label": "PAYMENTS FROM/T0"
+  },
+  {
+   "fieldname": "accounts_section",
+   "fieldtype": "Section Break",
+   "label": "ACCOUNTS"
+  },
+  {
+   "fieldname": "account_paid_from",
+   "fieldtype": "Link",
+   "label": "Account Paid From",
+   "options": "Account"
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "account_paid_to",
+   "fieldtype": "Link",
+   "label": "Account Paid To",
+   "options": "Account"
+  },
+  {
+   "fieldname": "amount_paid",
+   "fieldtype": "Currency",
+   "label": "Amount Paid"
+  },
+  {
+   "fieldname": "references_section",
+   "fieldtype": "Section Break",
+   "label": "REFERENCES"
+  },
+  {
+   "fieldname": "payment_references",
+   "fieldtype": "Table",
+   "label": "Payment References",
+   "options": "Payment Entry Reference"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Payment Entry",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "party_type",
+   "fieldtype": "Select",
+   "label": "Party Type",
+   "options": "Supplier\nCustomer"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2021-02-25 11:54:20.719866",
+ "modified_by": "Administrator",
+ "module": "Accounting",
+ "name": "Payment Entry",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
