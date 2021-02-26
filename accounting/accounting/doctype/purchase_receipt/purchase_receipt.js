@@ -21,6 +21,7 @@ frappe.ui.form.on('Purchase Receipt', {
 					childTable.item_quantity = row.item_quantity;
 					childTable.item_rate = row.item_rate;
 					childTable.amount = row.amount;
+					calculate_total(frm)
 					frm.refresh()
 					
 				})
@@ -29,13 +30,10 @@ frappe.ui.form.on('Purchase Receipt', {
 		
 		
 		
-
+		
 		
 	},
-	refresh:function(frm){
-		
-
-	}
+	
 
 });
 frappe.ui.form.on('Purchase Receipt',{
@@ -51,4 +49,31 @@ frappe.ui.form.on('Purchase Receipt',{
 		}	
 	}
 })
+frappe.ui.form.on('Purchase Receipt Item',{
+	item_name(frm){
+		calculate_total(frm)
+		frm.refresh()
+	},
+	item_quantity(frm){
+		calculate_total(frm)
+		frm.refresh()
+	},
+	items_remove(frm){
+		calculate_total(frm)
+		frm.refresh()
+	}
+})
+var calculate_total = function(frm){
+	var total = 0
+	var qty = 0
+		var items = frm.doc.items
+		for(var i in items){
+			total = total+items[i].amount
+			qty = qty + items[i].item_quantity
+		}
+		frm.doc.total_amount = flt(total)
+		frm.doc.total_quantity = flt(qty)
+		frm.refresh_field('total_amount')
+}
+
 

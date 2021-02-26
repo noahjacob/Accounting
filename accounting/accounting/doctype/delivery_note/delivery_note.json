@@ -97,7 +97,7 @@
    "default": "0",
    "fetch_from": "sales_order.total_amount",
    "fieldname": "total_amount",
-   "fieldtype": "Currency",
+   "fieldtype": "Float",
    "label": "Total Amount",
    "read_only": 1
   },
@@ -120,7 +120,7 @@
    "fetch_from": "sales_order.total_cost_price",
    "fetch_if_empty": 1,
    "fieldname": "total_cost_price",
-   "fieldtype": "Currency",
+   "fieldtype": "Float",
    "label": "Total Cost Price",
    "read_only": 1
   }
@@ -128,7 +128,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-02-24 14:02:59.058495",
+ "modified": "2021-02-26 17:41:31.353025",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Delivery Note",

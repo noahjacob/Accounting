@@ -94,7 +94,7 @@
    "default": "0",
    "fetch_from": "sales_order.total_amount",
    "fieldname": "total_amount",
-   "fieldtype": "Currency",
+   "fieldtype": "Float",
    "label": "Total Amount",
    "read_only": 1
   },
@@ -111,7 +111,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-02-24 15:15:16.905251",
+ "modified": "2021-02-26 17:41:02.677779",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Sales Invoice",

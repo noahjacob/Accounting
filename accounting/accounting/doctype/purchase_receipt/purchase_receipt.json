@@ -85,9 +85,8 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "0",
    "fieldname": "total_amount",
-   "fieldtype": "Currency",
+   "fieldtype": "Float",
    "label": "Total Amount",
    "read_only": 1
   },
@@ -119,7 +118,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-02-23 17:22:06.302045",
+ "modified": "2021-02-26 17:34:59.832689",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Purchase Receipt",

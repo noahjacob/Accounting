@@ -33,7 +33,7 @@
    "default": "0",
    "fetch_from": "item_name.standard_rate",
    "fieldname": "item_rate",
-   "fieldtype": "Currency",
+   "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Rate",
    "options": "INR"
@@ -41,7 +41,7 @@
   {
    "default": "0\n",
    "fieldname": "amount",
-   "fieldtype": "Currency",
+   "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Amount",
    "options": "INR"
@@ -50,7 +50,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-02-23 13:06:01.520010",
+ "modified": "2021-02-26 17:39:25.405191",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Purchase Receipt Item",

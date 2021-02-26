@@ -21,7 +21,8 @@
   "amount_paid",
   "references_section",
   "payment_references",
-  "amended_from"
+  "amended_from",
+  "reference"
  ],
  "fields": [
   {
@@ -85,8 +86,9 @@
   },
   {
    "fieldname": "amount_paid",
-   "fieldtype": "Currency",
-   "label": "Amount Paid"
+   "fieldtype": "Float",
+   "label": "Amount Paid",
+   "read_only": 1
   },
   {
    "fieldname": "references_section",
@@ -113,12 +115,18 @@
    "fieldtype": "Select",
    "label": "Party Type",
    "options": "Supplier\nCustomer"
+  },
+  {
+   "fieldname": "reference",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Reference"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-02-25 11:54:20.719866",
+ "modified": "2021-02-26 17:40:09.414714",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Payment Entry",

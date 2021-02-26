@@ -33,24 +33,22 @@
    "default": "0",
    "fetch_from": "item_name.standard_rate",
    "fieldname": "item_rate",
-   "fieldtype": "Currency",
+   "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Rate",
-   "options": "INR"
+   "label": "Rate"
   },
   {
-   "default": "0\n",
+   "default": "0",
    "fieldname": "amount",
-   "fieldtype": "Currency",
+   "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Amount",
-   "options": "INR"
+   "label": "Amount"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-02-22 16:54:30.222951",
+ "modified": "2021-02-26 18:13:54.597507",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Purchase Order Item",

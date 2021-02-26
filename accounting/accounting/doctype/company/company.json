@@ -14,7 +14,8 @@
   "default_receivable_account",
   "stock_received_but_not_billed",
   "default_expense_account",
-  "default_income_account"
+  "default_income_account",
+  "default_cash_account"
  ],
  "fields": [
   {
@@ -68,11 +69,17 @@
    "fieldtype": "Link",
    "label": "Default Income Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "default_cash_account",
+   "fieldtype": "Link",
+   "label": "Default Cash Account",
+   "options": "Account"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-02-24 14:18:08.604309",
+ "modified": "2021-02-26 15:24:56.116634",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Company",

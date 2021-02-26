@@ -87,7 +87,7 @@
   {
    "default": "0",
    "fieldname": "total_amount",
-   "fieldtype": "Currency",
+   "fieldtype": "Float",
    "label": "Total Amount",
    "read_only": 1
   },
@@ -112,7 +112,7 @@
   {
    "default": "0",
    "fieldname": "total_cost_price",
-   "fieldtype": "Currency",
+   "fieldtype": "Float",
    "label": "Total Cost Price",
    "read_only": 1
   }
@@ -120,7 +120,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-02-24 12:23:48.564034",
+ "modified": "2021-02-26 17:40:39.289973",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Sales Order",
