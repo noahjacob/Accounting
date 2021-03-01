@@ -50,11 +50,22 @@ frappe.ui.form.on('Purchase Receipt',{
 	}
 })
 frappe.ui.form.on('Purchase Receipt Item',{
-	item_name(frm){
+	item_name(frm,cdt,cdn){
+		let row = locals[cdt][cdn]
+		row.item_quantity = 1
+		row.amount = row.item_quantity * row.item_rate
 		calculate_total(frm)
 		frm.refresh()
 	},
-	item_quantity(frm){
+	item_quantity(frm,cdt,cdn){
+		let row = locals[cdt][cdn]
+		row.amount = row.item_quantity * row.item_rate
+		calculate_total(frm)
+		frm.refresh()
+	},
+	item_rate(frm,cdt,cdn){
+		let row = locals[cdt][cdn]
+		row.amount = row.item_quantity * row.item_rate
 		calculate_total(frm)
 		frm.refresh()
 	},

@@ -9,7 +9,7 @@ from frappe.utils import flt
 
 
 class SalesOrder(Document):
-	def before_save(self):
+	def validate(self):
 		self.total_amount, self.total_quantity, self.total_cost_price = 0, 0, 0
 		if not self.items:
 			frappe.throw("Add some Items before saving")

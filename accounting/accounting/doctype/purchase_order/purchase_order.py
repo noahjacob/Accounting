@@ -14,5 +14,7 @@ class PurchaseOrder(Document):
 		for d in self.items:
 			self.total_quantity = flt(self.total_quantity) + flt(d.item_quantity)
 			self.total_amount = flt(self.total_amount) + flt(d.amount)
+
+	
 		
 			

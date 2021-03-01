@@ -22,6 +22,9 @@ class PurchaseInvoice(Document):
 		stock_received_but_not_billed = frappe.get_value('Company',self.company,'stock_received_but_not_billed')
 		make_gl_entry(self,stock_received_but_not_billed,self.total_amount,flt(0))
 		make_gl_entry(self,default_payable_account,flt(0),self.total_amount)
+	def on_cancel(self):
+		# cancel gl entry
+		make_reverse_gl_entry(self,self.doctype,self.name)
 		
 
 

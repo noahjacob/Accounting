@@ -12,6 +12,7 @@ frappe.ui.form.on('Purchase Invoice', {
 			},
 			callback: function (r) {
 				var parent = r.message
+				
 
 
 				$.each(parent, function (index, row) {

@@ -24,5 +24,7 @@ class PaymentEntry(Document):
 			make_gl_entry(self,self.account_paid_to,self.amount_paid,flt(0)) #debit account
 			make_gl_entry(self,self.account_paid_from,flt(0),self.amount_paid) #credit account
 
-
+	def on_cancel(self):
+		# cancel gl entry
+		make_reverse_gl_entry(self,self.doctype,self.name)
 

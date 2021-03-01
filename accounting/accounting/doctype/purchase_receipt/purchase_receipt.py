@@ -22,6 +22,9 @@ class PurchaseReceipt(Document):
 		
 		make_gl_entry(self,default_inventory_account,self.total_amount,flt(0))
 		make_gl_entry(self,'Stock Received But Not Billed - S',flt(0),self.total_amount)
+	def on_cancel(self):
+		# cancel gl entry
+		make_reverse_gl_entry(self,self.doctype,self.name)
 
 
 @frappe.whitelist()
