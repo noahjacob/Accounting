@@ -14,7 +14,8 @@
   "rgt",
   "is_group",
   "old_parent",
-  "parent_account"
+  "parent_account",
+  "account_type"
  ],
  "fields": [
   {
@@ -66,12 +67,19 @@
    "fieldtype": "Link",
    "label": "Parent Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "account_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Account Type",
+   "options": "Asset\nLiability\nIncome\nExpense"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2021-02-23 16:43:00.952831",
+ "modified": "2021-03-02 16:36:47.203424",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Account",
