@@ -11,7 +11,7 @@ frappe.treeview_settings["Account"] = {
             fieldtype:"Link",
             options:"Company",
             label:__("Company"),
-            
+            "default": frappe.defaults.get_user_default("company")
             
             }
                    
