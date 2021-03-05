@@ -81,8 +81,7 @@ def set_balance_in_entries(data):
 
 def get_conditions(filters):
 	conditions = []
-	from_date = filters.get("from_date")
-	to_date =filters.get("to_date")
+	
 	
 	if filters.get("company"):
 		conditions.append("company=%(company)s")

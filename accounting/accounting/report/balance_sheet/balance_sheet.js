@@ -11,17 +11,33 @@ frappe.query_reports["Balance Sheet"] = {
 			"options": "Company",
 			"default": frappe.defaults.get_user_default("company")
 		},
+		{
+			"fieldname":"from_date",
+			"label": "From Date",
+			"fieldtype": "Date",
+			"default": frappe.datetime.add_months(frappe.datetime.get_today(),-1),
+			"reqd": 1,
+			"width": "60px"
+		},
+		{
+			"fieldname":"to_date",
+			"label":"To Date",
+			"fieldtype": "Date",
+			"default": frappe.datetime.add_months(frappe.datetime.get_today(),1),
+			"reqd": 1,
+			"width": "60px"
+		},
 
 	],
 	"formatter": function (value, row, column, data, default_formatter) {
-		if (column.fieldname == "account") {
+		if (data && column.fieldname == "account") {
 			value = data.account;
 			column.is_tree = true;
 		}
 
 		value = default_formatter(value, row, column, data);
 
-		if (!data.parent_account) {
+		if (data &&!data.parent_account) {
 			value = $(`<span>${value}</span>`);
 
 			var $value = $(value).css("font-weight", "bold");

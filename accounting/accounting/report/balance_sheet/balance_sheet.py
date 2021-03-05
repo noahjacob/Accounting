@@ -8,16 +8,19 @@ from frappe.utils import flt
 def execute(filters=None):
 	columns, data = [], []
 	columns = get_columns()
-	asset = get_data(filters.company,'Asset')
-	liability = get_data(filters.company,'Liability')
+	date=[]
+	date.append(filters.get('from_date'))
+	date.append(filters.get('to_date'))
+	asset = get_data(filters.company,'Asset',date)
+	liability = get_data(filters.company,'Liability',date)
 	data.extend(asset)
 	data.extend(liability)
 	get_total_profit_loss(data)
 
 	return columns, data
 
-def get_data(company,account_type):
-	accounts = get_accounts(company,account_type)
+def get_data(company,account_type,date):
+	accounts = get_accounts(company,account_type,date)
 	data = []
 	
 	indent = 0
@@ -34,18 +37,17 @@ def get_data(company,account_type):
 			indent = indent + 1
 	root_type = "Assets" if account_type == "Asset" else "Liabilities"
 	
-	get_account_balances(company,data,root_type)
+	get_account_balances(company,data,root_type,date)
 		
 	return data
 		
 
-def get_account_balances(company,accounts,root_type):
+def get_account_balances(company,accounts,root_type,date):
 	data = []
-	
 	for a in accounts:
 		if not a['has_value']:
-			amount  = get_balance(company,a['account'])
-			amount  = abs(amount)
+			amount  = get_balance(company,a['account'],date)
+			amount = abs(amount) if amount else 0.0
 			a['amount'] = amount
 			
 			for d in reversed(data):
@@ -78,14 +80,17 @@ def get_total_profit_loss(data):
 	data.append({'account':'Total(Credit)','amount':total_credit}) 
 
 	
-def get_balance(company,name):
+def get_balance(company,name,date):
+	
+	
 	return frappe.db.sql("""SELECT
 								sum(debit_amount) - sum(credit_amount) as total
 							FROM
 								`tabGL Entry`
 							WHERE
-								company = %s and account = %s
-						""",(company,name),as_dict = 1)[0]['total']
+								company = %s and account = %s and posting_date>= %s and posting_date<= %s
+						""",(company,name,date[0],date[1]),as_dict = 1)[0]['total']
+
 def data_add(data,account,indent):
 	data.append({
 		"account":account.name,
@@ -96,13 +101,13 @@ def data_add(data,account,indent):
 		"amount":0.0
 	})
 
-def get_accounts(company,account_type):
+def get_accounts(company,account_type,date):
 	return frappe.db.sql("""SELECT
 								name,parent_account,lft,is_group,account_type
 							FROM
 								tabAccount
 							WHERE
-								company = %s and account_type = %s
+								company = %s and account_type = %s 
 							ORDER BY
 								lft""",(company,account_type),as_dict = 1)
 def get_columns():

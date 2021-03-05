@@ -8,15 +8,18 @@ from frappe.utils import flt
 def execute(filters=None):
 	columns, data = [], []
 	columns = get_columns()
-	income = get_data(filters.company,'Income')
-	expense = get_data(filters.company,'Expense')
+	date=[]
+	date.append(filters.get('from_date'))
+	date.append(filters.get('to_date'))
+	income = get_data(filters.company,'Income',date)
+	expense = get_data(filters.company,'Expense',date)
 	data.extend(income)
 	data.extend(expense)
 	get_total_profit_loss(data)
 
 	return columns, data
 
-def get_data(company,account_type):
+def get_data(company,account_type,date):
 	accounts = get_accounts(company,account_type)
 	data = []
 	
@@ -34,18 +37,18 @@ def get_data(company,account_type):
 			indent = indent + 1
 	root_type = "Income" if account_type == "Income" else "Expenses"
 	
-	get_account_balances(company,data,root_type)
+	get_account_balances(company,data,root_type,date)
 		
 	return data
 		
 
-def get_account_balances(company,accounts,root_type):
+def get_account_balances(company,accounts,root_type,date):
 	data = []
 	
 	for a in accounts:
 		if not a['has_value']:
-			amount  = get_balance(company,a['account'])
-			amount  = abs(amount)
+			amount  = get_balance(company,a['account'],date)
+			amount = abs(amount) if amount else 0.0
 			a['amount'] = amount
 			
 			for d in reversed(data):
@@ -78,14 +81,14 @@ def get_total_profit_loss(data):
 	
 
 	
-def get_balance(company,name):
+def get_balance(company,name,date):
 	return frappe.db.sql("""SELECT
 								sum(debit_amount) - sum(credit_amount) as total
 							FROM
 								`tabGL Entry`
 							WHERE
-								company = %s and account = %s
-						""",(company,name),as_dict = 1)[0]['total']
+								company = %s and account = %s and posting_date >= %s and posting_date <= %s
+						""",(company,name,date[0],date[1]),as_dict = 1)[0]['total']
 def data_add(data,account,indent):
 	data.append({
 		"account":account.name,
