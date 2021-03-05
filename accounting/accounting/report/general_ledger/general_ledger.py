@@ -81,11 +81,14 @@ def set_balance_in_entries(data):
 
 def get_conditions(filters):
 	conditions = []
-
+	from_date = filters.get("from_date")
+	to_date =filters.get("to_date")
+	
 	if filters.get("company"):
 		conditions.append("company=%(company)s")
-
+	conditions.append("posting_date>= %(from_date)s and posting_date <=%(to_date)s")
 	conditions.append("is_cancelled=0")
+	
 
 	return "{}".format(" and ".join(conditions)) if conditions else "" 
 
