@@ -9,8 +9,13 @@ def execute(filters=None):
 	columns, data = [], []
 	columns = get_columns()
 	date=[]
-	date.append(filters.get('from_date'))
-	date.append(filters.get('to_date'))
+	if filters.get('filter_based_on') =='Date Range':
+		date.append(filters.get('from_date'))
+		date.append(filters.get('to_date'))
+	else:
+		get_fiscal_year(date,filters)
+
+	validate_dates(date)
 	income = get_data(filters.company,'Income',date)
 	expense = get_data(filters.company,'Expense',date)
 	data.extend(income)
@@ -18,6 +23,21 @@ def execute(filters=None):
 	get_total_profit_loss(data)
 
 	return columns, data
+
+def validate_dates(date):
+	if date[0] > date[1]:
+		frappe.throw("Starting Date cannot be greater than ending date")
+
+def get_fiscal_year(date,filters):
+	dates = frappe.db.sql("""SELECT
+								from_date,to_date
+							FROM
+								`tabFiscal Year`
+							WHERE
+								period = %(fiscal_year)s		
+								""",filters,as_dict = 1)[0]
+	date.append(dates.get('from_date'))
+	date.append(dates.get('to_date'))
 
 def get_data(company,account_type,date):
 	accounts = get_accounts(company,account_type)

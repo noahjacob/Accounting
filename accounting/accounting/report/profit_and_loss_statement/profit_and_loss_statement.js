@@ -12,11 +12,36 @@ frappe.query_reports["Profit and Loss Statement"] = {
 			"default": frappe.defaults.get_user_default("company")
 		},
 		{
+			"fieldname":"filter_based_on",
+			"label": "Filter Based On",
+			"fieldtype": "Select",
+			"options":["Fiscal Year","Date Range"] ,
+			"default": ["Fiscal Year"],
+			"width": "60px",
+			on_change: function(){
+				let filter_based_on = frappe.query_report.get_filter_value('filter_based_on')
+				frappe.query_report.toggle_filter_display('from_date',filter_based_on === 'Fiscal Year')
+				frappe.query_report.toggle_filter_display('to_date',filter_based_on === 'Fiscal Year')
+				frappe.query_report.toggle_filter_display('fiscal_year',filter_based_on === 'Date Range')
+				
+				frappe.query_report.refresh();
+			}
+		},
+		{
+			"fieldname":"fiscal_year",
+			"label": "Fiscal Year",
+			"fieldtype": "Link",
+			"options":"fiscal_year",
+			"default": frappe.defaults.get_user_default("fiscal_year"),
+			"width": "60px"
+		},
+		{
 			"fieldname":"from_date",
 			"label": "From Date",
 			"fieldtype": "Date",
 			"default": frappe.datetime.add_months(frappe.datetime.get_today(),-1),
 			"reqd": 1,
+			"hidden":1,
 			"width": "60px"
 		},
 		{
@@ -25,6 +50,7 @@ frappe.query_reports["Profit and Loss Statement"] = {
 			"fieldtype": "Date",
 			"default": frappe.datetime.add_months(frappe.datetime.get_today(),1),
 			"reqd": 1,
+			"hidden":1,
 			"width": "60px"
 		},
 
