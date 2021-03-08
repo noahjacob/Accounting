@@ -24,11 +24,75 @@ def execute(filters=None):
 	validate_dates(date)
 	income = get_data(filters.company,'Income',date)
 	expense = get_data(filters.company,'Expense',date)
+	
 	data.extend(income)
 	data.extend(expense)
+	
 	get_total_profit_loss(data)
+	chart = get_chart_data(filters,columns,income,expense,data[-1])
+	report_summary = get_report_summary(income[-2],expense[-2],data[-1])
+	return columns, data, None, chart, report_summary 
 
-	return columns, data
+def get_chart_data(filters,columns,income,expense,profit_loss):
+	labels = [d.get("label") for d in columns[1:]]
+
+	income_data, expense_data,profit_loss_data = [], [], []
+
+	
+	if income:
+		income_data.append(income[-2].get("amount"))
+	if expense:
+		expense_data.append(expense[-2].get("amount"))
+	if profit_loss:
+		profit_loss_data.append(profit_loss.get("amount"))	
+		
+
+	datasets = []
+	if income_data:
+		datasets.append({'name': ('Income'), 'values': income_data})
+	if expense_data:
+		datasets.append({'name': ('Expense'), 'values': expense_data})
+	if profit_loss_data:
+		datasets.append({'name': ('Net Profit/Loss'), 'values': profit_loss_data})
+	
+
+	chart = {
+		"data": {
+			'labels': labels,
+			'datasets': datasets
+		}
+	}
+
+	if filters.chart_type == "Bar":
+		chart["type"] = "bar"
+	else:
+		chart["type"] = "line"
+
+	return chart
+
+def get_report_summary(income,expense,profit_loss):
+	return [
+		{
+			"value": income['amount'],
+			"label": "Total Income This Year",
+			"datatype": "Currency",
+			"currency": "₹"
+		},
+		{
+			"value": expense['amount'],
+			"label": "Total Expense This Year",
+			"datatype": "Currency",
+			"currency": "₹"
+		},
+		
+		{
+			"value":profit_loss['amount'],
+			"label": "Profit/Loss This Year",
+			"indicator": "Green" if profit_loss['amount'] > 0 else "Red" ,
+			"datatype": "Currency",
+			"currency": "₹"
+		}
+	]
 
 def validate_dates(date):
 	if date[0] > date[1]:
@@ -74,7 +138,7 @@ def get_account_balances(company,accounts,root_type,date):
 	for a in accounts:
 		if not a['has_value']:
 			amount  = get_balance(company,a['account'],date)
-			amount = abs(amount) if amount else 0.0
+			amount = amount if amount  else 0.0
 			a['amount'] = amount
 			
 			for d in reversed(data):
@@ -101,7 +165,7 @@ def get_account_balances(company,accounts,root_type,date):
 def get_total_profit_loss(data):
 	total_debit = data[0]['amount']
 	total_credit = data[-2]['amount']
-	total_profit_loss = total_debit - total_credit
+	total_profit_loss = total_debit - abs(total_credit)
 	total_credit += total_profit_loss
 	data.append({'account':'Profit/Loss for the year','amount':total_profit_loss})
 	
@@ -109,7 +173,7 @@ def get_total_profit_loss(data):
 	
 def get_balance(company,name,date):
 	return frappe.db.sql("""SELECT
-								sum(debit_amount) - sum(credit_amount) as total
+								sum(credit_amount) - sum(debit_amount) as total
 							FROM
 								`tabGL Entry`
 							WHERE

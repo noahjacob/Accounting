@@ -32,10 +32,67 @@ def execute(filters=None):
 	liability_data = data[-2]
 	get_total_profit_loss(data)
 	profit_loss_data = data[-2]
+	report_summary = get_report_summary(asset_data,liability_data,profit_loss_data)
+	chart = get_chart_data(filters,columns,asset,liability)
+	
+	return columns, data,None, chart,report_summary
 
-	return columns, data
+def get_chart_data(filters,columns,asset,liability):
+	labels = [d.get("label") for d in columns[1:]]
 
-#  def get_report_summary(asset,liability,profit_loss):
+	asset_data, liability_data = [], []
+
+	
+	if asset:
+		asset_data.append(asset[-2].get("amount"))
+	if liability:
+		liability_data.append(liability[-2].get("amount"))
+		
+
+	datasets = []
+	if asset_data:
+		datasets.append({'name': ('Assets'), 'values': asset_data})
+	if liability_data:
+		datasets.append({'name': ('Liabilities'), 'values': liability_data})
+	
+
+	chart = {
+		"data": {
+			'labels': labels,
+			'datasets': datasets
+		}
+	}
+
+	if filters.chart_type == "Bar":
+		chart["type"] = "bar"
+	else:
+		chart["type"] = "line"
+
+	return chart
+
+def get_report_summary(asset,liability,profit_loss):
+	return [
+		{
+			"value": asset['amount'],
+			"label": "Total Asset",
+			"datatype": "Currency",
+			"currency": "₹"
+		},
+		{
+			"value": liability['amount'],
+			"label": "Total Liability",
+			"datatype": "Currency",
+			"currency": "₹"
+		},
+		
+		{
+			"value":profit_loss['amount'],
+			"label": "Provisional Profit/Loss ",
+			"indicator": "Green" if profit_loss['amount'] > 0 else "Red" ,
+			"datatype": "Currency",
+			"currency": "₹"
+		}
+	]
 
 
 def validate_dates(date):

@@ -53,6 +53,17 @@ frappe.query_reports["Profit and Loss Statement"] = {
 			"hidden":1,
 			"width": "60px"
 		},
+		{
+			"fieldname":"chart_type",
+			"label":"Chart Type",
+			"fieldtype": "Select",
+			"default": ["Bar"],
+			"reqd": 1,
+			"hidden":1,
+			"options":['Bar','Line'],
+			"width": "60px",
+			
+		}
 
 	],
 	"formatter": function (value, row, column, data, default_formatter) {
