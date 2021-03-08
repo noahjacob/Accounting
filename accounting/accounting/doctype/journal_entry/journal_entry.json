@@ -20,6 +20,7 @@
   {
    "fieldname": "title",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Title"
   },
   {
@@ -80,7 +81,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-02-21 16:00:01.951025",
+ "modified": "2021-03-08 13:11:49.783285",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Journal Entry",

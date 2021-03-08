@@ -14,7 +14,7 @@ class JournalEntry(Document):
 		self.calc_total_debit_credit()
 		if self.difference:
 			frappe.throw("The total debit and credit must be equal. The current difference is {}".format(self.difference))
-
+		self.title = self.accounts[0].account
 
 
 	def calc_total_debit_credit(self):

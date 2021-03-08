@@ -1,0 +1,19 @@
+{
+ "content": null,
+ "creation": "2021-03-05 15:44:30.906981",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2021-03-05 15:44:30.906981",
+ "modified_by": "Administrator",
+ "module": "Accounting",
+ "name": "test-page",
+ "owner": "Administrator",
+ "page_name": "Test Page",
+ "roles": [],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Test"
+}

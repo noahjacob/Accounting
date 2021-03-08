@@ -7,14 +7,20 @@ from frappe.utils import flt
 
 def execute(filters=None):
 	columns, data = [], []
-	columns = get_columns()
+	
 	date=[]
 	if filters.get('filter_based_on') =='Date Range':
 		date.append(filters.get('from_date'))
 		date.append(filters.get('to_date'))
+		from_year = (date[0].split("-"))[0]
+		to_year = (date[1].split("-"))[0]
+		labels = from_year if from_year == to_year else from_year + "-" + to_year 
 	else:
 		get_fiscal_year(date,filters)
+		labels = filters.get("fiscal_year")
 
+	columns = get_columns(labels)
+	
 	validate_dates(date)
 	income = get_data(filters.company,'Income',date)
 	expense = get_data(filters.company,'Expense',date)
@@ -128,7 +134,7 @@ def get_accounts(company,account_type):
 								company = %s and account_type = %s
 							ORDER BY
 								lft""",(company,account_type),as_dict = 1)
-def get_columns():
+def get_columns(labels):
 	columns = [
 		{
 			"fieldname": "account",
@@ -139,7 +145,7 @@ def get_columns():
 		},
 		{
 			"fieldname": 'amount',
-			"label": 'Amount',
+			"label": labels,
 			"fieldtype": "Currency",
 			"options": "currency",
 			"width": 500

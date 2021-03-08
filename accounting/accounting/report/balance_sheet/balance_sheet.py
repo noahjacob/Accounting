@@ -7,22 +7,36 @@ from frappe.utils import flt
 
 def execute(filters=None):
 	columns, data = [], []
-	columns = get_columns()
 	date=[]
+	labels = ""
 	if filters.get('filter_based_on') =='Date Range':
 		date.append(filters.get('from_date'))
 		date.append(filters.get('to_date'))
+		from_year = (date[0].split("-"))[0]
+		to_year = (date[1].split("-"))[0]
+		labels = from_year if from_year == to_year else from_year + "-" + to_year 
+		
+
 	else:
 		get_fiscal_year(date,filters)
+		labels = filters.get("fiscal_year")
+		
+	columns = get_columns(labels)
 
 	validate_dates(date)
 	asset = get_data(filters.company,'Asset',date)
 	liability = get_data(filters.company,'Liability',date)
 	data.extend(asset)
+	asset_data = data[-2]
 	data.extend(liability)
+	liability_data = data[-2]
 	get_total_profit_loss(data)
+	profit_loss_data = data[-2]
 
 	return columns, data
+
+#  def get_report_summary(asset,liability,profit_loss):
+
 
 def validate_dates(date):
 	if date[0] > date[1]:
@@ -130,7 +144,7 @@ def get_accounts(company,account_type,date):
 								company = %s and account_type = %s 
 							ORDER BY
 								lft""",(company,account_type),as_dict = 1)
-def get_columns():
+def get_columns(labels):
 	columns = [
 		{
 			"fieldname": "account",
@@ -141,7 +155,7 @@ def get_columns():
 		},
 		{
 			"fieldname": 'amount',
-			"label": 'Amount',
+			"label": labels,
 			"fieldtype": "Currency",
 			"options": "currency",
 			"width": 500
