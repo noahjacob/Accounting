@@ -78,12 +78,14 @@ def get_report_summary(income,expense,profit_loss):
 			"datatype": "Currency",
 			"currency": "₹"
 		},
+			{ "type": "separator", "value": "-"},
 		{
 			"value": expense['amount'],
 			"label": "Total Expense This Year",
 			"datatype": "Currency",
 			"currency": "₹"
 		},
+		{ "type": "separator", "value": "=", "color": "blue"},
 		
 		{
 			"value":profit_loss['amount'],
