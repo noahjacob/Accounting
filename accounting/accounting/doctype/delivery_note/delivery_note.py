@@ -11,14 +11,8 @@ from frappe.utils import flt
 
 class DeliveryNote(Document):
 	def validate(self):
-		self.total_amount, self.total_quantity, self.total_cost_price = 0, 0, 0
-		if not self.items:
-			frappe.throw("Add some Items before saving")
-		for d in self.items:
-			cost_price = flt(d.item_quantity) * flt(d.standard_rate)
-			self.total_cost_price = self.total_cost_price + cost_price
-			self.total_quantity = flt(self.total_quantity) + flt(d.item_quantity)
-			self.total_amount = flt(self.total_amount) + flt(d.amount)
+		calculate_totals(self)
+		validate_quantity(self)
 
 	def on_submit(self):
 		default_expense_account = frappe.get_value('Company',self.company,'default_expense_account')
@@ -30,6 +24,22 @@ class DeliveryNote(Document):
 	def on_cancel(self):
 		# cancel gl entry
 		make_reverse_gl_entry(self,self.doctype,self.name)
+
+def calculate_totals(self):
+	self.total_amount, self.total_quantity, self.total_cost_price = 0, 0, 0
+	if not self.items:
+		frappe.throw("Add some Items before saving")		
+	for d in self.items:
+		d.amount = d.item_quantity * d.item_rate
+		cost_price = flt(d.item_quantity) * flt(d.standard_rate)
+		self.total_cost_price = self.total_cost_price + cost_price
+		self.total_quantity = flt(self.total_quantity) + flt(d.item_quantity)
+		self.total_amount = flt(self.total_amount) + flt(d.amount)
+
+def validate_quantity(self):
+	for d in self.items:
+		if d.item_quantity < 0 or d.item_quantity == 0:
+			frappe.throw("Item quantity is invalid")
 
 
 
