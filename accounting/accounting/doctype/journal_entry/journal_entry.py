@@ -11,19 +11,18 @@ from accounting.accounting.general_ledger import make_gl_entry, make_reverse_gl_
 class JournalEntry(Document):
 
 	def validate(self):
-		self.calc_total_debit_credit()
+		calc_total_debit_credit(self)
 		if self.difference:
 			frappe.throw("The total debit and credit must be equal. The current difference is {}".format(self.difference))
-		self.title = self.accounts[0].account
+		if self.total_credit == 0 or self.total_debit == 0 :
+			frappe.throw('Total Cannot be Zero')
+		if not self.accounts:
+			frappe.throw('Account Entries are required')
+		else:
+			self.title = self.accounts[0].account
 
 
-	def calc_total_debit_credit(self):
-		self.total_debit, self.total_credit,self.difference = 0,0,0
-		for entry in self.accounts:
-			self.total_debit = flt(self.total_debit) +flt(entry.debit) 
-			self.total_credit = flt(self.total_credit) + flt(entry.credit)
 
-		self.difference = flt(self.total_debit) - (self.total_credit)
 
 
 	def on_submit(self):
@@ -36,3 +35,10 @@ class JournalEntry(Document):
 		make_reverse_gl_entry(self,self.doctype,self.name)
 		
 	
+def calc_total_debit_credit(self):
+	self.total_debit, self.total_credit,self.difference = 0,0,0
+	for entry in self.accounts:
+		self.total_debit = flt(self.total_debit) +flt(entry.debit) 
+		self.total_credit = flt(self.total_credit) + flt(entry.credit)
+
+	self.difference = flt(self.total_debit) - (self.total_credit)
