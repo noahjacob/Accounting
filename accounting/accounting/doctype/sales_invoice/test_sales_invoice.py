@@ -13,25 +13,25 @@ class TestSalesInvoice(unittest.TestCase):
 		self.assertTrue(check_created(si.name))
 		self.assertEqual(si.total_amount,60000)
 		self.assertEqual(si.total_quantity,2)
-		delete(si.name)
+		delete_si(si.name)
 	
 	def test_validations(self):
 		si = create_sales_invoice('Noah','Nintendo Switch',-1,30000,False,False)
 		self.assertRaises(frappe.exceptions.ValidationError,si.insert)
-		delete(si.name)
+		delete_si(si.name)
 		si = create_sales_invoice('Noah','Nintendo Switch',0,30000,False,False)
 		self.assertRaises(frappe.exceptions.ValidationError,si.insert)
-		delete(si.name)
+		delete_si(si.name)
 		si = create_sales_invoice('Noah',None,None,None,False,False)
 		self.assertRaises(frappe.exceptions.ValidationError,si.insert)
-		delete(si.name)
+		delete_si(si.name)
 
 	def test_on_cancel(self):
 
 		si = create_sales_invoice('Noah','Nintendo Switch',1,30000,True,True)
 		si.cancel()
 		gl_entries = get_gl_entries(si.name)
-		delete(si.name)
+		delete_si(si.name)
 		cancelled_entries = get_cancelled_entries(si.name)
 		self.assertTrue(len(cancelled_entries) == 4)
 		cancelled_entries = cancelled_entries[:2]
@@ -84,7 +84,7 @@ class TestSalesInvoice(unittest.TestCase):
 
 		si.cancel()
 		gl_entries = get_gl_entries(si.name)
-		delete(si.name)
+		delete_si(si.name)
 		
 		for gle in gl_entries:
 			delete_entry(gle.name)
@@ -131,7 +131,7 @@ def check_created(voucher_no):
 								name = %s""",voucher_no,as_dict = 1)
 
 	return note
-def delete(voucher_no):
+def delete_si(voucher_no):
 	frappe.delete_doc("Sales Invoice",voucher_no)
 def delete_entry(entry_name):
 	frappe.delete_doc("GL Entry",entry_name)

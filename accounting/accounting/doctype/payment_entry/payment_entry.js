@@ -105,7 +105,11 @@ frappe.ui.form.on('Payment Entry', {
 
 		}
 
-	}, payment_type(frm) {
+	},
+	company(frm){
+		frm.refresh()
+	},
+	 payment_type(frm) {
 		if (frm.doc.payment_type == "Pay") {
 			frm.doc.party_type = "Supplier"
 
