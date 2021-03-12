@@ -41,3 +41,32 @@ def validate_quantity(self):
 	for d in self.items:
 		if d.item_quantity < 0 or d.item_quantity == 0:
 			frappe.throw("Item quantity is invalid")
+
+@frappe.whitelist()
+def add_to_cart(user,item_name,qty):
+	check = check_cart(user)
+	print(check)
+	if not check:
+		si = frappe.new_doc('Sales Invoice')
+		si.customer = user
+		si.company = "Test"
+		si.set("items",[{
+			'item_name':item_name,
+			'item_quantity':flt(qty)
+		}])
+		si.save()
+	else:
+		print(check[0]['name'])
+		si = frappe.get_doc('Sales Invoice',check[0]['name'])
+		si.append("items",{
+			'item_name':item_name,
+			'item_quantity':flt(qty)
+		})
+		si.save()
+		
+def check_cart(user):
+	
+	check = frappe.db.get_list('Sales Invoice',filters = {'docstatus':0,'customer':user})
+	return check
+
+	

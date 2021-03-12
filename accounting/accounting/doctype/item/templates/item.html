@@ -1,0 +1,42 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<div class="py-20 row">
+    <div class="col-sm-2">
+      <img src="{{ image }}" alt="{{ title }}" />
+    </div>
+    <div class="col">
+      <h1>{{ title }}</h1>
+      <div class="mt-4">
+        <div>Price: <strong>{{ frappe.format(standard_rate,{'fieldtype':'Currency'}) }}</strong></div>
+        <br>
+        <button class = btn onclick="AddToCart()">Add to Cart</button>
+      </div>
+      
+    </div>
+  </div>
+
+<script>
+    function AddToCart(){
+
+		frappe.call({
+			method: 'accounting.accounting.doctype.sales_invoice.sales_invoice.add_to_cart',
+			args : {
+				user:frappe.session.user,
+                item_name:"{{title}}",
+                qty:flt(1)
+
+
+			},
+			callback: function(r){
+				var parent = r.message
+				
+				
+				
+			}
+		})
+         }
+</script>
+{% endblock %}
+
+<!-- this is a sample default web page template -->

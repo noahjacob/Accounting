@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_guest_to_view": 1,
  "autoname": "field:item_name",
  "creation": "2021-02-22 12:51:53.797453",
  "doctype": "DocType",
@@ -8,7 +9,9 @@
  "field_order": [
   "item_name",
   "item_code",
-  "standard_rate"
+  "standard_rate",
+  "image",
+  "route"
  ],
  "fields": [
   {
@@ -33,11 +36,23 @@
    "label": "Standard Rate",
    "options": "INR",
    "reqd": 1
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "label": "Image"
+  },
+  {
+   "fieldname": "route",
+   "fieldtype": "Data",
+   "label": "Route"
   }
  ],
+ "has_web_view": 1,
+ "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-02-22 12:51:53.797453",
+ "modified": "2021-03-12 19:40:38.859888",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Item",
@@ -56,6 +71,7 @@
    "write": 1
   }
  ],
+ "route": "products",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
