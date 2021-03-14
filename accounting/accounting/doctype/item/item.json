@@ -52,7 +52,7 @@
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-03-12 19:40:38.859888",
+ "modified": "2021-03-14 11:54:29.474570",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Item",
@@ -71,7 +71,7 @@
    "write": 1
   }
  ],
- "route": "products",
+ "route": "products_view",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

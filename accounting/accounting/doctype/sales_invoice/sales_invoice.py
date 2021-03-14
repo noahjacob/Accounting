@@ -47,23 +47,48 @@ def add_to_cart(user,item_name,qty):
 	check = check_cart(user)
 	print(check)
 	if not check:
-		si = frappe.new_doc('Sales Invoice')
-		si.customer = user
-		si.company = "Test"
-		si.set("items",[{
-			'item_name':item_name,
-			'item_quantity':flt(qty)
-		}])
-		si.save()
+		create_sales_invoice(user,item_name,qty)
 	else:
 		print(check[0]['name'])
 		si = frappe.get_doc('Sales Invoice',check[0]['name'])
+		print("ajksbdas",item_name)
 		si.append("items",{
 			'item_name':item_name,
 			'item_quantity':flt(qty)
 		})
 		si.save()
+@frappe.whitelist()
+def update_cart(user,index,buy = False, submit = False):
+	check = check_cart(user)
+	index = int(index)
+	cart = frappe.get_doc('Sales Invoice',check[0]['name'])
+	for idx,item in enumerate(cart.items):
 		
+		if idx == index:
+			if buy:
+				create_sales_invoice(user,item.item_name,item.item_quantity,submit = True)
+			
+			cart.remove(item)
+			break
+	if not len(cart.items):
+		frappe.delete_doc('Sales Invoice',check[0]['name'])
+	else:
+		cart.save()
+@frappe.whitelist()
+def create_sales_invoice(user,item_name,qty,save = True,submit = False):
+	si = frappe.new_doc('Sales Invoice')
+	si.customer = user
+	si.company = "Test"
+	si.set("items",[{
+		'item_name':item_name,
+		'item_quantity':flt(qty)
+	}])
+	if save or submit:
+		si.save()
+		if submit:
+			si.submit()
+
+@frappe.whitelist()		
 def check_cart(user):
 	
 	check = frappe.db.get_list('Sales Invoice',filters = {'docstatus':0,'customer':user})

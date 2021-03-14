@@ -1,19 +1,16 @@
 {% extends "templates/web.html" %}
 
 {% block page_content %}
+
 <div class="py-20 row">
-    <div class="col-sm-2">
-      <img src="{{ image }}" alt="{{ title }}" />
+  <div class="card" >
+    <img class="card-img-top" src="{{ image }}" alt="{{ title }}">
+    <div class="card-body">
+      <h3 class="card-title">{{title}}</h3>
+      <p class="card-text">Price: <strong>{{ frappe.format(standard_rate,{'fieldtype':'Currency'}) }}</strong></p>
+      <button class="btn btn-primary" onclick="AddToCart()">Add to Cart</button>
     </div>
-    <div class="col">
-      <h1>{{ title }}</h1>
-      <div class="mt-4">
-        <div>Price: <strong>{{ frappe.format(standard_rate,{'fieldtype':'Currency'}) }}</strong></div>
-        <br>
-        <button class = btn onclick="AddToCart()">Add to Cart</button>
-      </div>
-      
-    </div>
+  </div>
   </div>
 
 <script>
@@ -29,7 +26,7 @@
 
 			},
 			callback: function(r){
-				var parent = r.message
+				
 				
 				
 				

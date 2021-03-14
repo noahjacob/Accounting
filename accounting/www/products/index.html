@@ -1,0 +1,27 @@
+
+<div class= "px-4 row">
+	<div class= "col">	
+		<h2>Products</h2>
+	</div>
+	<div class = "text-right col">
+		<a href = "/cart" class= "btn btn-secondary " role = "button" >Go to Cart</a>
+	
+	</div>
+	
+</div>
+<div class = " px-8 row">
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+		  <li class="breadcrumb-item"><a href="/">Home</a></li>
+		  <li class="breadcrumb-item active" aria-current="page">Products</li>
+		</ol>
+	  </nav>
+</div>
+
+
+
+<div class="row ">
+	{% for item in items %}
+		{% include "accounting/www/products/item_row.html" %}
+	{% endfor %}
+</div>
