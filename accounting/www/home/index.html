@@ -1,0 +1,59 @@
+<div class= "row ">
+    <div class = "col ">
+        <h2>Home</h2>
+        
+    </div>
+    <div class = "col text-right">
+        <a href="/cart" role = "button" class = "btn btn-secondary">View Cart</a>
+        
+    </div>
+</div>
+<hr>
+
+<div
+    class="bg-image pt-20"
+    style="
+            background-image: url('https://parade.com/wp-content/uploads/2013/10/tv-show-best-boss-michael-scott-ftr.jpg');
+            height: 20rem;
+            "
+    >
+  <h1 class="text-white d-flex justify-content-center align-items-center" >Scott's Tots</h1>
+  <br>
+  <h2 class = "text-white d-flex justify-content-center align-items-center"> Making Dreams Come True !</h2>
+
+</div>
+<br>
+<div class= "row ">
+    <div class = "col-8">
+        <h2>Popular Items</h2>
+    </div>
+    <div class = "col text-right">
+        <a href="/products" role = "button" class = "btn btn-secondary">View Products</a>
+
+    </div>
+    
+</div>
+
+
+<hr>
+<div class = "row">
+    {% for item in items %}
+		
+<div class="col-xl-4 mb-6">
+	
+	
+    <div class="card" style = "width: 25rem">
+      <img class="card-img-top" src="{{ item.image }}" alt="{{ item.item_name }}" style = "height:15rem">
+      <div class="card-body">
+        <h3 class="card-title">{{item.item_name}}</h3>
+        <p class="card-text">Price: <strong>{{ frappe.format(item.standard_rate,{'fieldtype':'Currency'}) }}</strong></p>
+      </div>
+    </div>
+    </div>
+  
+  
+  <!-- this is a sample default list template -->
+  
+	{% endfor %}
+    
+</div>
