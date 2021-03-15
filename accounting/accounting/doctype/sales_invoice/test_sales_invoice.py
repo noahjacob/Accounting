@@ -10,6 +10,13 @@ import unittest
 class TestSalesInvoice(unittest.TestCase):
 	def test_new_sales_invoice_totals(self):
 		si = create_sales_invoice('Noah','Nintendo Switch',1,30000,True,False)
+		si.append('items',
+		{
+				"item_name":'Nintendo Switch',
+				"item_quantity":1,
+				"item_rate":30000
+			},)
+		si.save()
 		self.assertTrue(check_created(si.name))
 		self.assertEqual(si.total_amount,60000)
 		self.assertEqual(si.total_quantity,2)
@@ -28,7 +35,7 @@ class TestSalesInvoice(unittest.TestCase):
 
 	def test_on_cancel(self):
 
-		si = create_sales_invoice('Noah','Nintendo Switch',1,30000,True,True)
+		si = create_sales_invoice('Noah','Nintendo Switch',2,30000,True,True)
 		si.cancel()
 		gl_entries = get_gl_entries(si.name)
 		delete_si(si.name)
@@ -59,7 +66,7 @@ class TestSalesInvoice(unittest.TestCase):
 			delete_entry(gle.name)
 	
 	def test_gl_entry(self):
-		si = create_sales_invoice('Noah','Nintendo Switch',1,30000,True,True)
+		si = create_sales_invoice('Noah','Nintendo Switch',2,30000,True,True)
 		gl_entries = get_gl_entries(si.name)
 		self.assertTrue(len(gl_entries) == 2)
 		gl_values = gl_entries.copy()
@@ -109,11 +116,7 @@ def create_sales_invoice(customer,item_name,qty,rate,save =True,submit = False )
 				"item_quantity":qty,
 				"item_rate":rate
 			},
-			{
-				"item_name":item_name,
-				"item_quantity":qty,
-				"item_rate":rate
-			},
+			
 		])
 
 	if save or submit:

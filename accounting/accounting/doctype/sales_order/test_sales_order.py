@@ -10,6 +10,14 @@ import unittest
 class TestSalesOrder(unittest.TestCase):
 	def test_new_sales_order_totals(self):
 		s_order = create_sales_order('Noah','Nintendo Switch',1,30000,True,False)
+		s_order.append('items',
+		{
+				"item_name":'Nintendo Switch',
+				"item_quantity":1,
+				"delivery_date":nowdate(),
+				"item_rate":30000
+			},)
+		s_order.save()
 		self.assertTrue(check_created_order(s_order.name))
 		self.assertEqual(s_order.total_cost_price,50000)
 		self.assertEqual(s_order.total_amount,60000)
@@ -43,11 +51,7 @@ def create_sales_order(customer,item_name,qty,rate,save =True,submit = False ):
 				"item_quantity":qty,
 				"item_rate":rate
 			},
-			{
-				"item_name":item_name,
-				"item_quantity":qty,
-				"item_rate":rate
-			},
+			
 		])
 
 	if save or submit:

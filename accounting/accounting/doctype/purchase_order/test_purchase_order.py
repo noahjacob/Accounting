@@ -10,7 +10,13 @@ import unittest
 class TestPurchaseOrder(unittest.TestCase):
 
 	def test_new_purchase_order(self):
-		p_order = create_purchase_order('Gamestop','Nintendo Switch',2,True,False)
+		p_order = create_purchase_order('Gamestop','Nintendo Switch',1,True,False)
+		p_order.append("items",
+			{
+				"item_name":'Nintendo Switch',
+				"item_quantity":1
+			})
+		p_order.save()
 		self.assertTrue(check_created_order(p_order.name),p_order.name)
 		total_amount, total_quantity = 0,0
 		for d in p_order.items:
@@ -44,11 +50,8 @@ def create_purchase_order(supplier,item_name,qty,save =True,submit = False ):
 			{
 				"item_name":item_name,
 				"item_quantity":qty
-			},
-			{
-				"item_name":item_name,
-				"item_quantity":qty
-			},
+			}
+			
 		])
 
 	if save or submit:

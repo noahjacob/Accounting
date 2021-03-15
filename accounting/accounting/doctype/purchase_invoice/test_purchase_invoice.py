@@ -10,6 +10,13 @@ import unittest
 class TestPurchaseInvoice(unittest.TestCase):
 	def test_new_purchase_invoice(self):
 		pi = create_purchase_invoice('Gamestop','Nintendo Switch',2,True,False)
+		pi.append('items',
+		{
+				"item_name":'Nintendo Switch',
+				"item_quantity":2
+			},)
+		pi.save()
+
 		self.assertTrue(check_created(pi.name),pi.name)
 		self.assertEqual(pi.total_amount,100000)
 		self.assertEqual(pi.total_quantity,4)
@@ -28,7 +35,7 @@ class TestPurchaseInvoice(unittest.TestCase):
 		delete(pi.name)
 	
 	def test_on_cancel(self):
-		pi = create_purchase_invoice('Gamestop','Nintendo Switch',1,True,True)
+		pi = create_purchase_invoice('Gamestop','Nintendo Switch',2,True,True)
 		pi.cancel()
 		gl_entries = get_gl_entries(pi.name)
 		delete(pi.name)
@@ -60,7 +67,7 @@ class TestPurchaseInvoice(unittest.TestCase):
 
 
 	def test_gl_entry(self):
-		pi = create_purchase_invoice('Gamestop','Nintendo Switch',1,True,True)
+		pi = create_purchase_invoice('Gamestop','Nintendo Switch',2,True,True)
 		gl_entries = get_gl_entries(pi.name)
 		self.assertTrue(len(gl_entries) == 2)
 		gl_values = gl_entries.copy()
@@ -111,10 +118,7 @@ def create_purchase_invoice(supplier,item_name,qty,save =True,submit = False ):
 				"item_name":item_name,
 				"item_quantity":qty
 			},
-			{
-				"item_name":item_name,
-				"item_quantity":qty
-			},
+			
 		])
 
 	if save or submit:

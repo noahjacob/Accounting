@@ -10,6 +10,12 @@ import unittest
 class TestPurchaseReceipt(unittest.TestCase):
 	def test_new_purchase_receipt(self):
 		pr = create_purchase_receipt('Gamestop','Nintendo Switch',2,True,False)
+		pr.append('items',
+		{
+				"item_name":'Nintendo Switch',
+				"item_quantity":2
+			})
+		pr.save()
 		self.assertTrue(check_created(pr.name),pr.name)
 		self.assertEqual(pr.total_amount,100000)
 		self.assertEqual(pr.total_quantity,4)
@@ -28,7 +34,7 @@ class TestPurchaseReceipt(unittest.TestCase):
 		delete(pr.name)
 	
 	def test_on_cancel(self):
-		pr = create_purchase_receipt('Gamestop','Nintendo Switch',1,True,True)
+		pr = create_purchase_receipt('Gamestop','Nintendo Switch',2,True,True)
 		pr.cancel()
 		gl_entries = get_gl_entries(pr.name)
 		delete(pr.name)
@@ -60,7 +66,7 @@ class TestPurchaseReceipt(unittest.TestCase):
 
 
 	def test_gl_entry(self):
-		pr = create_purchase_receipt('Gamestop','Nintendo Switch',1,True,True)
+		pr = create_purchase_receipt('Gamestop','Nintendo Switch',2,True,True)
 		gl_entries = get_gl_entries(pr.name)
 		self.assertTrue(len(gl_entries) == 2)
 		gl_values = gl_entries.copy()
@@ -111,10 +117,7 @@ def create_purchase_receipt(supplier,item_name,qty,save =True,submit = False ):
 				"item_name":item_name,
 				"item_quantity":qty
 			},
-			{
-				"item_name":item_name,
-				"item_quantity":qty
-			},
+			
 		])
 
 	if save or submit:

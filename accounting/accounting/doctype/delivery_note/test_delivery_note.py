@@ -10,6 +10,13 @@ import unittest
 class TestDeliveryNote(unittest.TestCase):
 	def test_new_delivery_note_totals(self):
 		dn = create_delivery_note('Noah','Nintendo Switch',1,30000,True,False)
+		dn.append('items',
+		{
+				"item_name":'Nintendo Switch',
+				"item_quantity":1,
+				"item_rate":30000
+			},)
+		dn.save()
 		self.assertTrue(check_created_note(dn.name))
 		self.assertEqual(dn.total_cost_price,50000)
 		self.assertEqual(dn.total_amount,60000)
@@ -29,7 +36,7 @@ class TestDeliveryNote(unittest.TestCase):
 
 	def test_on_cancel(self):
 
-		dn = create_delivery_note('Noah','Nintendo Switch',1,30000,True,True)
+		dn = create_delivery_note('Noah','Nintendo Switch',2,30000,True,True)
 		dn.cancel()
 		gl_entries = get_gl_entries(dn.name)
 		delete_notes(dn.name)
@@ -60,7 +67,7 @@ class TestDeliveryNote(unittest.TestCase):
 			delete_entry(gle.name)
 	
 	def test_gl_entry(self):
-		dn = create_delivery_note('Noah','Nintendo Switch',1,30000,True,True)
+		dn = create_delivery_note('Noah','Nintendo Switch',2,30000,True,True)
 		gl_entries = get_gl_entries(dn.name)
 		self.assertTrue(len(gl_entries) == 2)
 		gl_values = gl_entries.copy()
@@ -111,11 +118,7 @@ def create_delivery_note(customer,item_name,qty,rate,save =True,submit = False )
 				"item_quantity":qty,
 				"item_rate":rate
 			},
-			{
-				"item_name":item_name,
-				"item_quantity":qty,
-				"item_rate":rate
-			},
+			
 		])
 
 	if save or submit:

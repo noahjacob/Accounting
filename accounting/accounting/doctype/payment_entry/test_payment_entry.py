@@ -14,7 +14,7 @@ class TestPaymentEntry(unittest.TestCase):
 		pi = create_purchase_invoice("Gamestop","Nintendo Switch",1,True,True)
 		pe = create_payment_entry("Pay","Purchase Invoice",pi.name,True,False)
 		self.assertTrue(check_created(pe.name))
-		self.assertEqual(pe.amount_paid,50000)
+		self.assertEqual(pe.amount_paid,25000)
 		self.assertEqual(pe.account_paid_from,"Cash - T")
 		self.assertEqual(pe.account_paid_to,"Creditors - T")
 
@@ -39,11 +39,11 @@ class TestPaymentEntry(unittest.TestCase):
 			{
 				'account':'Cash - T',
 				'debit_amount':0,
-				'credit_amount':50000,
+				'credit_amount':25000,
 			},
 			{
 				'account':'Creditors - T',
-				'debit_amount':50000,
+				'debit_amount':25000,
 				'credit_amount':0,
 			},
 			
@@ -83,12 +83,12 @@ class TestPaymentEntry(unittest.TestCase):
 			{
 				'account':'Creditors - T',
 				'debit_amount':0,
-				'credit_amount':50000,
+				'credit_amount':25000,
 				'is_cancelled':1
 			},
 			{
 				'account':'Cash - T',
-				'debit_amount':50000,
+				'debit_amount':25000,
 				'credit_amount':0,
 				'is_cancelled':1
 			},
@@ -113,7 +113,7 @@ class TestPaymentEntry(unittest.TestCase):
 		si = create_sales_invoice("Noah","Nintendo Switch",1,30000,True,True)
 		pe = create_payment_entry("Receive","Sales Invoice",si.name,True,False)
 		self.assertTrue(check_created(pe.name))
-		self.assertEqual(pe.amount_paid,60000)
+		self.assertEqual(pe.amount_paid,30000)
 		self.assertEqual(pe.account_paid_from,"Debtors - T")
 		self.assertEqual(pe.account_paid_to,"Cash - T")
 		delete_pe(pe.name)
@@ -140,12 +140,12 @@ class TestPaymentEntry(unittest.TestCase):
 			{
 				'account':'Cash - T',
 				'debit_amount':0,
-				'credit_amount':60000,
+				'credit_amount':30000,
 				'is_cancelled':1
 			},
 			{
 				'account':'Debtors - T',
-				'debit_amount':60000,
+				'debit_amount':30000,
 				'credit_amount':0,
 				'is_cancelled':1
 			},
@@ -177,11 +177,11 @@ class TestPaymentEntry(unittest.TestCase):
 			{
 				'account':'Debtors - T',
 				'debit_amount':0,
-				'credit_amount':60000,
+				'credit_amount':30000,
 			},
 			{
 				'account':'Cash - T',
-				'debit_amount':60000,
+				'debit_amount':30000,
 				'credit_amount':0,
 			},
 			
