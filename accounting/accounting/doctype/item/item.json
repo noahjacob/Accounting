@@ -11,6 +11,11 @@
   "item_code",
   "standard_rate",
   "image",
+  "column_break_5",
+  "model",
+  "color",
+  "section_break_8",
+  "item_description",
   "route"
  ],
  "fields": [
@@ -46,13 +51,36 @@
    "fieldname": "route",
    "fieldtype": "Data",
    "label": "Route"
+  },
+  {
+   "fieldname": "item_description",
+   "fieldtype": "Text",
+   "label": "Item Description"
+  },
+  {
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model"
+  },
+  {
+   "fieldname": "color",
+   "fieldtype": "Data",
+   "label": "Color"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
   }
  ],
  "has_web_view": 1,
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-03-14 11:54:29.474570",
+ "modified": "2021-03-16 12:37:15.119757",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Item",

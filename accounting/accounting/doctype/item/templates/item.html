@@ -1,39 +1,144 @@
 {% extends "templates/web.html" %}
 
 {% block page_content %}
+<style>
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button
+  { 
+    -webkit-appearance: none; 
+    margin: 0; 
+  }
 
-<div class="py-20 row">
-  <div class="card" >
-    <img class="card-img-top" src="{{ image }}" alt="{{ title }}">
-    <div class="card-body">
-      <h3 class="card-title">{{title}}</h3>
-      <p class="card-text">Price: <strong>{{ frappe.format(standard_rate,{'fieldtype':'Currency'}) }}</strong></p>
-      <button class="btn btn-primary" onclick="AddToCart()">Add to Cart</button>
+  
+</style>
+<div class = " px-8 row">
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+		  <li class="breadcrumb-item"><a href="/home">Home</a></li>
+      <li class="breadcrumb-item"><a href="/products">Products</a></li>
+		  <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+		</ol>
+	  </nav>
+</div>
+<section class="mb-5">
+
+  <div class="row">
+    <div class="col-md-6 mb-4 mb-md-0">
+        <div class="row  mx-1">
+
+          <div class="col-12 mb-0">
+            <figure class="view overlay rounded z-depth-1 main-img">
+              
+                <img src="{{image}}"
+                  class="img-fluid ">
+              
+            </figure>
+          </div>
+        </div>
+
+      </div>
+    <div class="col-md-6">
+
+      <h5>{{title}}</h5>
+      <p class="mb-2 text-muted text-uppercase small">Consoles</p>
+     
+      <p><span class="mr-1"><strong>₹{{ frappe.format(standard_rate,{'fieldtype':'Currency'}) }}</strong></span></p>
+      <p class="pt-1">{{item_description}}</p>
+      <div class="table-responsive">
+        <table class="table table-sm table-borderless mb-0">
+          <tbody>
+            <tr>
+              <th class="pl-0 w-25" scope="row"><strong>Model</strong></th>
+              <td>{{model}}</td>
+            </tr>
+            <tr>
+              <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
+              <td>{{color}}</td>
+            </tr>
+            <tr>
+              <th class="pl-0 w-25" scope="row"><strong>Quantity</strong></th>
+              <td>
+                <div class="mb-2">
+                  <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus btn btn-light btn-sm">-</button>
+                  <input class="qty" min="1" value="1" type="number" style = "width:3rem">
+                  <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus btn btn-light btn-sm">+</button>
+                </div>
+              </td>
+            </tr>
+           
+          </tbody>
+        </table>
+      </div>
+      <hr>   
+      
+      <button type="button" class="btn btn-primary mr-1 mb-2" onclick="BuyItem()">Buy now</button>
+      <button type="button" class="btn mr-1 mb-2 "onclick = 'AddToCart()'>Add to cart</button>
+    </div>
+     
     </div>
   </div>
-  </div>
 
+</section>
 <script>
-    function AddToCart(){
+  function BuyItem(){
+    frappe.call({
+      
 
-		frappe.call({
-			method: 'accounting.accounting.doctype.sales_invoice.sales_invoice.add_to_cart',
+			method: 'accounting.accounting.doctype.sales_invoice.sales_invoice.create_sales_invoice',
 			args : {
 				user:frappe.session.user,
-                item_name:"{{title}}",
-                qty:flt(1)
-
+        item_name:'{{item_name}}',
+        qty:flt($('.qty').val()),
+        submit:true
 
 			},
-			callback: function(r){
-				
+			callback:function (r){
+				frappe.msgprint({
+          title:'Success!',
+          indicator:'green',
+          message:'Thanks for shopping !'
+      });
 				
 				
 				
 			}
 		})
-         }
+
+  }
 </script>
+<script>
+ 
+  function AddToCart(){
+    frappe.call({
+      
+
+			method: 'accounting.accounting.doctype.sales_invoice.sales_invoice.add_to_cart',
+			args : {
+				user:frappe.session.user,
+                item_name:'{{item_name}}',
+                qty:flt($('.qty').val())
+
+
+			},
+			callback:function (r){
+				frappe.msgprint({
+          title:'Success!',
+          indicator:'green',
+          message:'Added to Cart'
+      });
+				
+				
+				
+			}
+		})
+    
+  }
+</script>
+
+
+
+
+
 {% endblock %}
 
 <!-- this is a sample default web page template -->

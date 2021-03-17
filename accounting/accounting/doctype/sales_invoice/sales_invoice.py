@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
 from accounting.accounting.general_ledger import make_gl_entry, make_reverse_gl_entry
-from frappe.utils import flt
+from frappe.utils import flt, nowdate
 
 
 
@@ -45,13 +45,13 @@ def validate_quantity(self):
 @frappe.whitelist()
 def add_to_cart(user,item_name,qty):
 	check = check_cart(user)
-	print(check)
+	
 	if not check:
 		create_sales_invoice(user,item_name,qty)
 	else:
-		print(check[0]['name'])
+		
 		si = frappe.get_doc('Sales Invoice',check[0]['name'])
-		print("ajksbdas",item_name)
+		
 		si.append("items",{
 			'item_name':item_name,
 			'item_quantity':flt(qty)
@@ -60,20 +60,27 @@ def add_to_cart(user,item_name,qty):
 @frappe.whitelist()
 def update_cart(user,index,buy = False, submit = False):
 	check = check_cart(user)
-	index = int(index)
+	
 	cart = frappe.get_doc('Sales Invoice',check[0]['name'])
-	for idx,item in enumerate(cart.items):
+	cart.posting_date = nowdate()
+	if submit:
+		cart.submit()
 		
-		if idx == index:
-			if buy:
-				create_sales_invoice(user,item.item_name,item.item_quantity,submit = True)
-			
-			cart.remove(item)
-			break
-	if not len(cart.items):
-		frappe.delete_doc('Sales Invoice',check[0]['name'])
+
 	else:
-		cart.save()
+		index = int(index)
+		for idx,item in enumerate(cart.items):
+			
+			if idx == index:
+				if buy:
+					create_sales_invoice(user,item.item_name,item.item_quantity,submit = True)
+				
+				cart.remove(item)
+				break
+		if not len(cart.items):
+			frappe.delete_doc('Sales Invoice',check[0]['name'])
+		else:
+			cart.save()
 @frappe.whitelist()
 def create_sales_invoice(user,item_name,qty,save = True,submit = False):
 	si = frappe.new_doc('Sales Invoice')

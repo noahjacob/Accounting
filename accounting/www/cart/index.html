@@ -2,15 +2,26 @@
   <h2>Cart</h2>
 </div>
 <div class="px-8 row">
+
   <div class="row">
-    <nav aria-label="breadcrumb">
+  
+    <div class = "row px-4">
+        <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/home">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">Cart</li>
       </ol>
     </nav>
+    </div>
+   
   </div>
+  {%if cart %}
+  <div class = "col text-right">
+    <button class="btn mb-3 " value = "{{cart.total_amount}}" onclick = "CheckOut(this.value)">Checkout</button>
+  </div>
+  {% endif %}
 </div>
+
 <div class="row">
   {% if cart %} {% for d in cart.get('items') %} {% set image =
   frappe.db.get_value('Item',d.item_name,'image')%}
@@ -26,11 +37,15 @@
       <div class="card-body">
         <h3 class="card-title">{{d.item_name}}</h3>
         <p class="card-text">
+          Quantity:<strong>{{ d.item_quantity }}</strong>
+        </p>
+        <p class="card-text">
           Price:
           <strong
-            >{{ frappe.format(d.item_rate,{'fieldtype':'Currency'}) }}</strong
+            > ₹ {{ frappe.format(d.amount,{'fieldtype':'Currency'}) }}</strong
           >
         </p>
+        
 
         <div class="row">
           <div class="col">
@@ -57,7 +72,9 @@
   </div>
 
   {%endfor%}
+
 </div>
+<h3>Total Amount : ₹ {{frappe.format(cart.total_amount,{'fieldtype':'Currency'})}}</h3>
 
 {%else%}
 <div class="container">
@@ -67,6 +84,44 @@
 </div>
 
 {%endif%}
+
+<script type = "text/javascript">
+  function CheckOut(){
+
+    frappe.confirm(
+      "Are you sure you want to checkout? " ,
+      function () {
+        
+        frappe.call({
+          method:
+            "accounting.accounting.doctype.sales_invoice.sales_invoice.update_cart",
+          args: {
+            user: frappe.session.user,
+            index:0,
+            submit:true
+          },
+          callback: function (r) {
+            
+            
+            frappe.msgprint({
+              message: "Thanks for shopping!",
+              indicator: "success",
+              title:"Success"
+            });
+            
+            setTimeout(function(){
+              window.location.reload(1);
+           }, 3000);
+            
+          },
+        });
+      },
+      function () {
+        window.close();
+      }
+    );
+  }
+</script>
 <script>
   function RemoveFromCart(idx) {
     idx -= 1;

@@ -11,15 +11,31 @@
     <div class="card-body">
       <h3 class="card-title">{{item.item_name}}</h3>
       <p class="card-text">Price: <strong>{{ frappe.format(item.standard_rate,{'fieldtype':'Currency'}) }}</strong></p>
-      <button class="btn btn-primary" value = "{{item.item_name}}" onclick="AddToCart(this.value)">Add to Cart</button>
+      <div class = "row">
+        <div class = "col">
+          <button class="btn btn-primary" value = "{{item.item_name}}" onclick="AddToCart(this.value,)">Add to Cart</button>
+        </div>
+        <div class = "text-right col">
+          <a href = "{{item.route}}" role = "button" class="btn ">View</a>
+        </div>
+      </div>
+      
     </div>
   </div>
   </div>
-<script>
-    function AddToCart(data){
-		
 
+{% block base_scripts %}
+<script type="text/javascript" src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+
+
+{% endblock %}
+<script type = "text/javascript">
+  
+ 
+    function AddToCart(data){
+      
 		frappe.call({
+      
 
 			method: 'accounting.accounting.doctype.sales_invoice.sales_invoice.add_to_cart',
 			args : {
