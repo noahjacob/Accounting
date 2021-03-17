@@ -8,11 +8,14 @@
  "field_order": [
   "company_name",
   "company_type",
+  "column_break_3",
   "abbr",
+  "default_accounts_section",
   "default_inventory_account",
   "default_payable_account",
   "default_receivable_account",
   "stock_received_but_not_billed",
+  "column_break_10",
   "default_expense_account",
   "default_income_account",
   "default_cash_account"
@@ -32,7 +35,9 @@
   {
    "fieldname": "abbr",
    "fieldtype": "Data",
-   "label": "Abbreviaion"
+   "in_list_view": 1,
+   "label": "Abbreviaion",
+   "set_only_once": 1
   },
   {
    "fieldname": "default_inventory_account",
@@ -75,11 +80,24 @@
    "fieldtype": "Link",
    "label": "Default Cash Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "default_accounts_section",
+   "fieldtype": "Section Break",
+   "label": "DEFAULT ACCOUNTS"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-02-26 15:24:56.116634",
+ "modified": "2021-03-17 14:21:05.162907",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Company",
