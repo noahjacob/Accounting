@@ -2,6 +2,13 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Delivery Note', {
+	setup(frm){frm.set_query("customer", function () {
+		return {
+			"filters": {
+				"party_type": 'Customer'
+			}
+		}
+	})},
 	sales_order(frm) {
 		frm.clear
 		frappe.call({

@@ -43,6 +43,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "default": "0",
    "fieldname": "total_credit",
    "fieldtype": "Currency",
    "label": "Total Credit",
@@ -50,6 +51,7 @@
    "read_only": 1
   },
   {
+   "default": "0",
    "fieldname": "total_debit",
    "fieldtype": "Currency",
    "label": "Total Debit",
@@ -81,7 +83,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-03-08 13:11:49.783285",
+ "modified": "2021-03-18 20:19:42.032786",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Journal Entry",

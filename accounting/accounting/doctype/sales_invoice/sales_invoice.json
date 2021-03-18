@@ -8,10 +8,10 @@
  "engine": "InnoDB",
  "field_order": [
   "customer",
+  "company",
   "delivery_note",
   "column_break_3",
   "naming_series",
-  "company",
   "posting_date",
   "ordered_items_section",
   "items",
@@ -34,7 +34,8 @@
    "fieldname": "delivery_note",
    "fieldtype": "Link",
    "label": "Delivery Note",
-   "options": "Delivery Note"
+   "options": "Delivery Note",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_3",
@@ -111,7 +112,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-02-26 17:41:02.677779",
+ "modified": "2021-03-18 19:41:55.615120",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Sales Invoice",

@@ -2,6 +2,15 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Purchase Invoice', {
+	setup(frm){
+		frm.set_query("supplier", function () {
+			return {
+				"filters": {
+					"party_type": 'Supplier'
+				}
+			}
+		})
+	},
 	purchase_receipt(frm) {
 
 		frappe.call({

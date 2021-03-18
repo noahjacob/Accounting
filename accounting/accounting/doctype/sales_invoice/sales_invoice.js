@@ -2,6 +2,13 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Sales Invoice', {
+	setup(frm){frm.set_query("customer", function () {
+		return {
+			"filters": {
+				"party_type": 'Customer'
+			}
+		}
+	})},
 	delivery_note(frm){
 		frm.clear_table('items')
 		frappe.db.get_doc('Delivery Note',frm.doc.delivery_note)

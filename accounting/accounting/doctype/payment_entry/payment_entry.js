@@ -64,6 +64,13 @@ frappe.ui.form.on('Payment Entry', {
 			return {
 				filters: { "name": ["in", doctypes] }
 			}
+		}),
+		frm.set_query("reference_name", "payment_references", function () {
+			
+			
+			return {
+				filters: { "company": frm.doc.company }
+			}
 		})
 
 

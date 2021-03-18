@@ -40,7 +40,8 @@
    "fieldname": "purchase_receipt",
    "fieldtype": "Link",
    "label": "Purchase Receipt",
-   "options": "Purchase Receipt"
+   "options": "Purchase Receipt",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_3",
@@ -110,7 +111,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-02-26 17:39:37.307263",
+ "modified": "2021-03-18 19:42:50.908862",
  "modified_by": "Administrator",
  "module": "Accounting",
  "name": "Purchase Invoice",
