@@ -58,7 +58,7 @@ def add_to_cart(user,item_name,qty):
 		})
 		si.save()
 @frappe.whitelist()
-def update_cart(user,index,buy = False, submit = False):
+def update_cart(user,index,qty = 0,update = False,buy = False, submit = False):
 	check = check_cart(user)
 	
 	cart = frappe.get_doc('Sales Invoice',check[0]['name'])
@@ -69,12 +69,19 @@ def update_cart(user,index,buy = False, submit = False):
 
 	else:
 		index = int(index)
+		qty = int(qty)
+		print(qty)
 		for idx,item in enumerate(cart.items):
 			
 			if idx == index:
 				if buy:
 					create_sales_invoice(user,item.item_name,item.item_quantity,submit = True)
 				
+					
+				elif update:
+					
+					item.item_quantity = flt(qty)
+					break
 				cart.remove(item)
 				break
 		if not len(cart.items):

@@ -1,11 +1,20 @@
-<div class="px-4 row">
-  <h2>Cart</h2>
-</div>
-<div class="px-8 row">
+
+<head>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  </head>
+  {%if "Guest" in user %}
+  <script>
+   
+      window.location.replace('/login')
+    
+  </script>
+  {%endif%}
+
+<div class="px-5 row">
 
   <div class="row">
   
-    <div class = "row px-4">
+    <div class = "row px-4"
         <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/home">Home</a></li>
@@ -15,75 +24,168 @@
     </div>
    
   </div>
-  {%if cart %}
-  <div class = "col text-right">
-    <button class="btn mb-3 " value = "{{cart.total_amount}}" onclick = "CheckOut(this.value)">Checkout</button>
-  </div>
-  {% endif %}
+ 
 </div>
 
 <div class="row">
-  {% if cart %} {% for d in cart.get('items') %} {% set image =
-  frappe.db.get_value('Item',d.item_name,'image')%}
+  {% if cart %} 
+  <section>
 
-  <div class="col-xl-4 mb-6">
-    <div class="card" style="width: 25rem">
-      <img
-        class="card-img-top"
-        src="{{ image }}"
-        alt="{{ d.item_name }} "
-        style="height: 15rem"
-      />
-      <div class="card-body">
-        <h3 class="card-title">{{d.item_name}}</h3>
-        <p class="card-text">
-          Quantity:<strong>{{ d.item_quantity }}</strong>
-        </p>
-        <p class="card-text">
-          Price:
-          <strong
-            > ₹ {{ frappe.format(d.amount,{'fieldtype':'Currency'}) }}</strong
-          >
-        </p>
-        
+    <!--Grid row-->
+    <div class="row">
+  
+      <!--Grid column-->
+      <div class="col-lg-8">
+  
+        <!-- Card -->
+        <div class="card wish-list mb-3">
+          <div class="card-body">
+            
+            
+            <h5 class="mb-4">Cart (<span>{{cart.get('items')|length}}</span> items)</h5>
+  
+  
+  {% for d in cart.get('items') %} 
+  {% set image = frappe.db.get_value('Item',d.item_name,'image')%}
+  {% set model = frappe.db.get_value('Item',d.item_name,'model')%}
+  {% set color = frappe.db.get_value('Item',d.item_name,'color')%}
+  <hr class="mb-4">
+          <div class="row mb-4">
+            <div class="col-md-5 col-lg-3 col-xl-3" style = "width:60rem">
+              <div class=" mb-3 mb-md-0">
+                <img class="img-fluid  "
+                  src={{image}} alt="{{d.item_name}}" style = "width:100%;height:auto;">
+                
+                 
+              
+              </div>
+            </div>
+            <div class="col-md-7 col-lg-9 col-xl-9">
+              <div>
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <h5>{{d.item_name}}</h5>
+                    <p class="mb-3 text-muted text-uppercase small">MODEL: {{model}} </p>
+                    <p class="mb-2 text-muted text-uppercase small">COLOR: {{color}}</p>
+                    
+                  </div>
+                  <div>
+                    <div class="mb-2">
+                      <button data-index= "{{loop.index}}" onclick="this.parentNode.querySelector('input[type=number]').stepDown(); UpdateQty(this)" class="minus btn btn-light btn-sm">-</button>
+                      <input class="qty" min="1" value="{{d.item_quantity}}" type="number" style = "width:2rem">
+                      <button data-index= "{{loop.index}}" onclick="this.parentNode.querySelector('input[type=number]').stepUp(); UpdateQty(this)" class="plus btn btn-light btn-sm">+</button>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <a href="#!" type="button" class=" small text-uppercase mr-3 text-danger" data-index= "{{loop.index}}" onclick="RemoveFromCart(this)"><i
+                        class="fas fa-trash-alt mr-1 text-danger"></i> Remove item </a>
+                    <a href="#!" type="button" class="card-link-secondary small text-uppercase" data-index= "{{loop.index}}" onclick="BuyItem(this)"><i
+                        class="fas fa-shopping-cart mr-1"></i> Buy Now </a>
+                  </div>
+                  <p class="mb-0"><span><strong>₹ {{frappe.format(d.amount,{'fieldtype':'Currency'})}}</strong></span></p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <div class="row">
-          <div class="col">
-            <button
-              class="btn btn-danger"
-              value="{{loop.index}}"
-              onclick="RemoveFromCart(this.value)"
-            >
-              Remove
-            </button>
-          </div>
-          <div class="text-right col">
-            <button
-              class="btn btn-primary"
-              value="{{loop.index}}"
-              onclick="BuyItem(this.value)"
-            >
-              Buy Now
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
   {%endfor%}
+</div>
+</div>
+<!-- Card -->
+
+
+
+
 
 </div>
-<h3>Total Amount : ₹ {{frappe.format(cart.total_amount,{'fieldtype':'Currency'})}}</h3>
+<!--Grid column-->
+
+<!--Grid column-->
+<div class="col-lg-4">
+
+<!-- Card -->
+<div class="card mb-3">
+  <div class="card-body">
+
+    <h5 class="mb-3">Summary</h5>
+
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+        Total Price
+        <span>₹{{frappe.format(cart.total_amount,{'fieldtype':'Currency'})}}</span>
+        
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+        Total Quantity
+        <span>{{cart.total_quantity}}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+        <div>
+          <strong>Grand Total</strong>
+          
+        </div>
+        <span><strong>₹{{frappe.format(cart.total_amount,{'fieldtype':'Currency'})}}</strong></span>
+      </li>
+    </ul>
+
+    <button type="button" class="btn btn-primary btn-block text-uppercase" onclick="CheckOut()">Checkout</button>
+
+  </div>
+</div>
+<!-- Card -->
+
+
+
+</div>
+<!--Grid column-->
+
+</div>
+<!--Grid row-->
+
+</section>
+
+</div>
+
 
 {%else%}
+
 <div class="container">
   <div class="text-center m-10">
     <h2>No Items</h2>
   </div>
 </div>
+  
+  
 
 {%endif%}
+<script type = "text/javascript">
+  function UpdateQty(data){
+    var qty = data.parentNode.querySelector('input[type=number]').value
+    var idx = data.getAttribute("data-index");
+    idx -= 1;
+    
+        frappe.call({
+          method:
+            "accounting.accounting.doctype.sales_invoice.sales_invoice.update_cart",
+          args: {
+            user: frappe.session.user,
+            index:idx,
+            update:true,
+            qty:qty
+          },
+          callback: function (r) {
+            window.location.reload()
+          },
+        });
+    
+  
+  }
+</script>
 
 <script type = "text/javascript">
   function CheckOut(){
@@ -123,8 +225,10 @@
   }
 </script>
 <script>
-  function RemoveFromCart(idx) {
+  function RemoveFromCart(data) {
+    var idx = data.getAttribute("data-index");
     idx -= 1;
+    console.log(idx)
     frappe.call({
       method:
         "accounting.accounting.doctype.sales_invoice.sales_invoice.update_cart",
@@ -138,10 +242,12 @@
     });
   }
 
-  function BuyItem(idx) {
+  function BuyItem(data) {
+    
     frappe.confirm(
       "Are you sure you want to purchase this item?",
       function () {
+        var idx = data.getAttribute("data-index");
         idx -= 1;
         frappe.call({
           method:
@@ -153,11 +259,15 @@
           },
           callback: function (r) {
             
-            location.reload();
-            show_alert({
+            frappe.msgprint({
               message: "Thanks for shopping!",
               indicator: "success",
+              title:"Success"
             });
+            
+            setTimeout(function(){
+              window.location.reload(1);
+           }, 3000);
           },
         });
       },
@@ -167,3 +277,14 @@
     );
   }
 </script>
+<!--Section: Block Content-->
+
+          
+          
+
+
+
+          
+          
+       
+<!--Section: Block Content-->
